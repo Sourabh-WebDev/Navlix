@@ -1,0 +1,341 @@
+import { Layout, Menu, Button, Typography, Row, Col, Card, Avatar, Input, AutoComplete } from 'antd'
+import { ShoppingCartOutlined, TruckOutlined, SafetyOutlined, UndoOutlined } from '@ant-design/icons'
+import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import Link from 'next/link'
+
+const { Header, Content, Footer } = Layout
+const { Title, Paragraph } = Typography
+const { Meta } = Card
+
+const fadeInUp = {
+  initial: { opacity: 0, y: 60 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6 }
+}
+
+const staggerContainer = {
+  animate: {
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+}
+
+const products = [
+  'iPhone 15 Pro', 'Samsung Galaxy S24', 'MacBook Pro', 'iPad Air', 'AirPods Pro',
+  'Dell XPS 13', 'Sony WH-1000XM5', 'Nintendo Switch', 'PlayStation 5', 'Xbox Series X',
+  'Apple Watch', 'Fitbit Charge', 'Canon EOS R5', 'GoPro Hero 12', 'Drone DJI Mini'
+]
+
+export default function Home() {
+  const [searchOptions, setSearchOptions] = useState([])
+  const [featuredProducts, setFeaturedProducts] = useState([])
+
+  useEffect(() => {
+    axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}api/Product`)
+      .then(res => setFeaturedProducts(res.data.items?.slice(0, 3) || []))
+      .catch(err => console.error('Error fetching products:', err))
+  }, [])
+
+  const handleSearch = async (value) => {
+    if (!value) {
+      setSearchOptions([])
+      return
+    }
+
+    try {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}api/Product`)
+      const filtered = response.data.items?.filter(product =>
+        product.ProductName.toLowerCase().includes(value.toLowerCase())
+      ).map(product => ({
+        value: product.ProductName,
+        label: `${product.ProductName} - ₹${product.DiscountedPrice}`
+      })) || []
+      setSearchOptions(filtered)
+    } catch (error) {
+      console.error('Search error:', error)
+    }
+  }
+
+  console.log(featuredProducts, 'Featured Products')
+
+  return (
+    <Layout>
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Header style={{ background: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', padding: '0 24px', height: 'auto', lineHeight: 'normal' }}>
+          <Row justify="space-between" align="middle" style={{ height: 64 }}>
+            <Col xs={8} sm={6} md={4}>
+              <motion.div whileHover={{ scale: 1.05 }}>
+                <Title level={3} style={{ margin: 0, color: '#52c41a' }}>Navlix</Title>
+              </motion.div>
+            </Col>
+            <Col xs={0} sm={0} md={12}>
+              <Menu mode="horizontal" style={{ border: 'none', background: 'transparent', justifyContent: 'center' }}>
+                <Menu.Item key="products">Products</Menu.Item>
+                <Menu.Item key="about">About</Menu.Item>
+                <Menu.Item key="contact">Contact</Menu.Item>
+              </Menu>
+            </Col>
+            <Col xs={16} sm={18} md={8} style={{ textAlign: 'right' }}>
+              <Link href="/login">
+                <motion.span whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={{ display: 'inline-block' }}>
+                  <Button type="text" style={{ marginRight: 8 }}>Login</Button>
+                </motion.span>
+              </Link>
+              <Link href="/signup">
+                <motion.span whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={{ display: 'inline-block' }}>
+                  <Button type="default" style={{ marginRight: 8 }}>Sign Up</Button>
+                </motion.span>
+              </Link>
+              <motion.span whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={{ display: 'inline-block' }}>
+                <Button type="primary" icon={<ShoppingCartOutlined />}>
+                  Cart (0)
+                </Button>
+              </motion.span>
+            </Col>
+          </Row>
+        </Header>
+      </motion.div>
+
+      <Content>
+        <motion.div
+          style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', padding: '100px 24px', textAlign: 'center', color: 'white' }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        >
+          <motion.div {...fadeInUp}>
+            <Title level={1} style={{ fontSize: '3.5rem', marginBottom: 24, color: 'white' }}>
+              Premium Products for Modern Living
+            </Title>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <Paragraph style={{ fontSize: '1.3rem', maxWidth: 600, margin: '0 auto 40px', color: 'rgba(255,255,255,0.9)' }}>
+              Discover our curated collection of high-quality products designed to enhance your lifestyle.
+            </Paragraph>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            style={{ maxWidth: 500, margin: '0 auto 32px' }}
+          >
+            <AutoComplete
+              options={searchOptions}
+              onSearch={handleSearch}
+              placeholder="Search for products..."
+              style={{ width: '100%' }}
+            >
+              <Input.Search
+                size="large"
+                style={{ borderRadius: 25 }}
+                enterButton="Search"
+              />
+            </AutoComplete>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Button type="primary" size="large" style={{ height: 50, fontSize: '16px', padding: '0 40px' }}>
+              Shop Now
+            </Button>
+          </motion.div>
+        </motion.div>
+
+        <div style={{ padding: '80px 24px', maxWidth: 1200, margin: '0 auto' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <Title level={2} style={{ textAlign: 'center', marginBottom: 60, fontSize: '2.5rem' }}>
+              Featured Products
+            </Title>
+          </motion.div>
+          <motion.div
+            variants={staggerContainer}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            <Row gutter={[32, 32]} justify="center">
+              {featuredProducts.map((product) => (
+                <Col xs={24} sm={12} lg={8} key={product.ProductId}>
+                  <motion.div
+                    variants={fadeInUp}
+                    whileHover={{ y: -10, scale: 1.02 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Card
+                      hoverable
+                      cover={
+                        (() => {
+                          try {
+                            const images = JSON.parse(product.Images)
+                            const imageUrl = images[0]?.ImageUrl
+                            return imageUrl ? (
+                              <img 
+                                src={`${process.env.NEXT_PUBLIC_BASE_URL}${imageUrl}`} 
+                                alt={product.ProductName}
+                                style={{ height: 250, objectFit: 'cover' }}
+                              />
+                            ) : (
+                              <div style={{ height: 250, background: 'linear-gradient(45deg, #f0f2f5, #d9d9d9)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', color: '#8c8c8c' }}>No Image</div>
+                            )
+                          } catch {
+                            return <div style={{ height: 250, background: 'linear-gradient(45deg, #f0f2f5, #d9d9d9)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', color: '#8c8c8c' }}>No Image</div>
+                          }
+                        })()
+                      }
+                      style={{ borderRadius: 12, overflow: 'hidden' }}
+                    >
+                      <Meta
+                        title={<span style={{ fontSize: '18px' }}>{product.ProductName}</span>}
+                        description={`${product.CategoryName} - ${product.ProductDescription}`}
+                      />
+                      <div style={{ marginTop: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Title level={3} style={{ color: '#1890ff', margin: 0 }}>
+                          ₹{product.DiscountedPrice}
+                        </Title>
+                        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                          <Button type="primary" size="large">
+                            Add to Cart
+                          </Button>
+                        </motion.div>
+                      </div>
+                    </Card>
+                  </motion.div>
+                </Col>
+              ))}
+            </Row>
+          </motion.div>
+        </div>
+
+        <div style={{ background: '#f8f9fa', padding: '80px 24px' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+            <motion.div
+              variants={staggerContainer}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
+            >
+              <Row gutter={[48, 48]} justify="center">
+                {[
+                  { icon: TruckOutlined, title: 'Free Shipping', desc: 'Free shipping on all orders over $50. Fast and reliable delivery.', color: '#1890ff' },
+                  { icon: SafetyOutlined, title: 'Secure Payment', desc: '100% secure payment processing with SSL encryption.', color: '#52c41a' },
+                  { icon: UndoOutlined, title: 'Easy Returns', desc: '30-day hassle-free return policy for your peace of mind.', color: '#fa8c16' }
+                ].map((feature, index) => (
+                  <Col xs={24} md={8} key={index} style={{ textAlign: 'center' }}>
+                    <motion.div
+                      variants={fadeInUp}
+                      whileHover={{ scale: 1.05, y: -5 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <motion.div
+                        whileHover={{ rotate: 360 }}
+                        transition={{ duration: 0.6 }}
+                      >
+                        <Avatar size={80} style={{ backgroundColor: feature.color, marginBottom: 24 }}>
+                          <feature.icon style={{ fontSize: 32 }} />
+                        </Avatar>
+                      </motion.div>
+                      <Title level={3} style={{ marginBottom: 16 }}>{feature.title}</Title>
+                      <Paragraph style={{ fontSize: '16px', color: '#666' }}>{feature.desc}</Paragraph>
+                    </motion.div>
+                  </Col>
+                ))}
+              </Row>
+            </motion.div>
+          </div>
+        </div>
+      </Content>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+      >
+        <Footer style={{ background: '#001529', padding: '60px 24px 24px' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+            <motion.div
+              variants={staggerContainer}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
+            >
+              <Row gutter={[32, 32]}>
+                <Col xs={24} md={6}>
+                  <motion.div variants={fadeInUp}>
+                    <Title level={3} style={{ color: 'white', marginBottom: 16 }}>Navlix</Title>
+                    <Paragraph style={{ color: 'rgba(255,255,255,0.65)', lineHeight: 1.6 }}>
+                      Your trusted partner for premium products and exceptional customer service.
+                    </Paragraph>
+                  </motion.div>
+                </Col>
+                <Col xs={24} md={6}>
+                  <motion.div variants={fadeInUp}>
+                    <Title level={4} style={{ color: 'white', marginBottom: 16 }}>Quick Links</Title>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                      <motion.a href="#" style={{ color: 'rgba(255,255,255,0.65)', textDecoration: 'none' }} whileHover={{ color: 'white', x: 5 }}>Products</motion.a>
+                      <motion.a href="#" style={{ color: 'rgba(255,255,255,0.65)', textDecoration: 'none' }} whileHover={{ color: 'white', x: 5 }}>About Us</motion.a>
+                      <motion.a href="#" style={{ color: 'rgba(255,255,255,0.65)', textDecoration: 'none' }} whileHover={{ color: 'white', x: 5 }}>Contact</motion.a>
+                    </div>
+                  </motion.div>
+                </Col>
+                <Col xs={24} md={6}>
+                  <motion.div variants={fadeInUp}>
+                    <Title level={4} style={{ color: 'white', marginBottom: 16 }}>Support</Title>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                      <motion.a href="#" style={{ color: 'rgba(255,255,255,0.65)', textDecoration: 'none' }} whileHover={{ color: 'white', x: 5 }}>Help Center</motion.a>
+                      <motion.a href="#" style={{ color: 'rgba(255,255,255,0.65)', textDecoration: 'none' }} whileHover={{ color: 'white', x: 5 }}>Returns</motion.a>
+                      <motion.a href="#" style={{ color: 'rgba(255,255,255,0.65)', textDecoration: 'none' }} whileHover={{ color: 'white', x: 5 }}>Shipping Info</motion.a>
+                    </div>
+                  </motion.div>
+                </Col>
+                <Col xs={24} md={6}>
+                  <motion.div variants={fadeInUp}>
+                    <Title level={4} style={{ color: 'white', marginBottom: 16 }}>Newsletter</Title>
+                    <Paragraph style={{ color: 'rgba(255,255,255,0.65)', marginBottom: 16 }}>Subscribe for updates and exclusive offers</Paragraph>
+                    <Input.Group compact>
+                      <Input placeholder="Enter your email" style={{ width: 'calc(100% - 100px)' }} />
+                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                        <Button type="primary" style={{ width: 100 }}>Subscribe</Button>
+                      </motion.div>
+                    </Input.Group>
+                  </motion.div>
+                </Col>
+              </Row>
+            </motion.div>
+            <motion.div
+              style={{ textAlign: 'center', marginTop: 48, paddingTop: 24, borderTop: '1px solid #434343' }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5 }}
+            >
+              <Paragraph style={{ color: 'rgba(255,255,255,0.45)', margin: 0 }}>
+                © 2024 Navlix. All rights reserved.
+              </Paragraph>
+            </motion.div>
+          </div>
+        </Footer>
+      </motion.div>
+    </Layout>
+  )
+}
