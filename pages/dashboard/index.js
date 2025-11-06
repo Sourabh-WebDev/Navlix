@@ -1,6 +1,7 @@
 import { Layout, Menu, Button, Typography, Row, Col, Card, Statistic } from 'antd'
 import { DashboardOutlined, ShoppingOutlined, UserOutlined, SettingOutlined, ClockCircleOutlined } from '@ant-design/icons'
 import { logout } from '../../utils/auth'
+import { useUser } from '../../contexts/UserContext'
 import { useEffect } from 'react'
 import Link from 'next/link'
 
@@ -8,6 +9,7 @@ const { Header, Sider, Content } = Layout
 const { Title } = Typography
 
 export default function Dashboard() {
+  const { user, updateUser, logout } = useUser()
   useEffect(() => {
     const token = localStorage.getItem('token')
     if (!token) {
@@ -24,12 +26,16 @@ export default function Dashboard() {
               <Title level={3} style={{ margin: 0, color: '#1890ff' }}>Navlix</Title>
             </Link>
           </Col>
+          <Col style={{ textAlign: 'left' }}>
+            <Title level={3} style={{ margin: 0, color: '#1890ff' }}>Hey! {user?.username}</Title>
+          </Col>
+
           <Col>
             <Button onClick={logout}>Logout</Button>
           </Col>
         </Row>
       </Header>
-      
+
       <Layout>
         <Sider width={200} style={{ background: '#fff' }}>
           <Menu mode="inline" selectedKeys={['dashboard']} style={{ height: '100%', borderRight: 0 }}>
@@ -50,10 +56,10 @@ export default function Dashboard() {
             </Menu.Item>
           </Menu>
         </Sider>
-        
+
         <Content style={{ padding: 24 }}>
           <Title level={2}>Dashboard</Title>
-          
+
           <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
             <Col xs={24} md={8}>
               <Card>
@@ -71,7 +77,7 @@ export default function Dashboard() {
               </Card>
             </Col>
           </Row>
-          
+
           <Card title="Recent Orders">
             {[1, 2, 3].map((order) => (
               <Row key={order} justify="space-between" style={{ padding: '12px 0', borderBottom: '1px solid #f0f0f0' }}>

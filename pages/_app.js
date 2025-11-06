@@ -1,12 +1,13 @@
 import 'antd/dist/reset.css'
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify'
+import { UserProvider } from '../contexts/UserContext'
 
 export default function App({ Component, pageProps }) {
   return (
-    <>
+    <UserProvider>
       <Component {...pageProps} />
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
-    </>
+    </UserProvider>
   )
 }

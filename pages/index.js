@@ -3,6 +3,7 @@ import { ShoppingCartOutlined, TruckOutlined, SafetyOutlined, UndoOutlined } fro
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { useUser } from '../contexts/UserContext'
 import Link from 'next/link'
 
 const { Header, Content, Footer } = Layout
@@ -61,7 +62,9 @@ export default function Home() {
     }
   }
 
-  const user = 'U'
+
+  const { user, updateUser, logout } = useUser()
+
 
   console.log(featuredProducts, 'Featured Products')
 
@@ -91,7 +94,7 @@ export default function Home() {
                 {token ?
                   <motion.span whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={{ display: 'inline-block' }}>
                     <Avatar style={{ backgroundColor: '#62a86eff', verticalAlign: 'middle' }} size="large" gap={2}>
-                      {user}
+                      {user?.username ? user.username.charAt(0).toUpperCase() : 'U'}
                     </Avatar>
                   </motion.span> :
                   <Link href="/login">
@@ -102,6 +105,11 @@ export default function Home() {
                 {!token && <Link href="/signup">
                   <motion.span whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={{ display: 'inline-block' }}>
                     <Button type="default">Sign Up</Button>
+                  </motion.span>
+                </Link>}
+                {user?.username && <Link href="/dashboard">
+                  <motion.span whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={{ display: 'inline-block' }}>
+                    <Button type="default">Dashboard</Button>
                   </motion.span>
                 </Link>}
                 <motion.span whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={{ display: 'inline-block' }}>
