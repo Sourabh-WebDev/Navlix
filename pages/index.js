@@ -1,4 +1,4 @@
-import { Layout, Menu, Button, Typography, Row, Col, Card, Avatar, Input, AutoComplete } from 'antd'
+import { Layout, Menu, Button, Typography, Row, Col, Card, Avatar, Input, AutoComplete, Carousel } from 'antd'
 import { ShoppingCartOutlined, TruckOutlined, SafetyOutlined, UndoOutlined } from '@ant-design/icons'
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
@@ -32,8 +32,10 @@ const products = [
 export default function Home() {
   const [searchOptions, setSearchOptions] = useState([])
   const [featuredProducts, setFeaturedProducts] = useState([])
+  const [token, setToken] = useState(null)
 
   useEffect(() => {
+    setToken(localStorage.getItem('token'))
     axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}api/Product`)
       .then(res => setFeaturedProducts(res.data.items?.slice(0, 3) || []))
       .catch(err => console.error('Error fetching products:', err))
@@ -59,6 +61,8 @@ export default function Home() {
     }
   }
 
+  const user = 'U'
+
   console.log(featuredProducts, 'Featured Products')
 
   return (
@@ -83,21 +87,29 @@ export default function Home() {
               </Menu>
             </Col>
             <Col xs={16} sm={18} md={8} style={{ textAlign: 'right' }}>
-              <Link href="/login">
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 8 }}>
+                {token ?
+                  <motion.span whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={{ display: 'inline-block' }}>
+                    <Avatar style={{ backgroundColor: '#62a86eff', verticalAlign: 'middle' }} size="large" gap={2}>
+                      {user}
+                    </Avatar>
+                  </motion.span> :
+                  <Link href="/login">
+                    <motion.span whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={{ display: 'inline-block' }}>
+                      <Button type="text">Login</Button>
+                    </motion.span>
+                  </Link>}
+                {!token && <Link href="/signup">
+                  <motion.span whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={{ display: 'inline-block' }}>
+                    <Button type="default">Sign Up</Button>
+                  </motion.span>
+                </Link>}
                 <motion.span whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={{ display: 'inline-block' }}>
-                  <Button type="text" style={{ marginRight: 8 }}>Login</Button>
+                  <Button type="primary" icon={<ShoppingCartOutlined />}>
+                    Cart (0)
+                  </Button>
                 </motion.span>
-              </Link>
-              <Link href="/signup">
-                <motion.span whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={{ display: 'inline-block' }}>
-                  <Button type="default" style={{ marginRight: 8 }}>Sign Up</Button>
-                </motion.span>
-              </Link>
-              <motion.span whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={{ display: 'inline-block' }}>
-                <Button type="primary" icon={<ShoppingCartOutlined />}>
-                  Cart (0)
-                </Button>
-              </motion.span>
+              </div>
             </Col>
           </Row>
         </Header>
@@ -143,20 +155,43 @@ export default function Home() {
               />
             </AutoComplete>
           </motion.div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Button type="primary" size="large" style={{ height: 50, fontSize: '16px', padding: '0 40px' }}>
-              Shop Now
-            </Button>
-          </motion.div>
         </motion.div>
 
-        <div style={{ padding: '80px 24px', maxWidth: 1200, margin: '0 auto' }}>
+        <div style={{ padding: '80px 24px', margin: '0 auto' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            style={{ marginBottom: 60 }}
+          >
+            <Carousel autoplay dotPosition="bottom" style={{ borderRadius: 12, overflow: 'hidden' }}>
+              <div>
+                <div style={{ height: 300, background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
+                  <div style={{ textAlign: 'center' }}>
+                    <Title level={2} style={{ color: 'white', marginBottom: 16 }}>Special Offers</Title>
+                    <Paragraph style={{ fontSize: '18px', color: 'rgba(255,255,255,0.9)' }}>Up to 50% off on selected items</Paragraph>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div style={{ height: 300, background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
+                  <div style={{ textAlign: 'center' }}>
+                    <Title level={2} style={{ color: 'white', marginBottom: 16 }}>New Arrivals</Title>
+                    <Paragraph style={{ fontSize: '18px', color: 'rgba(255,255,255,0.9)' }}>Discover the latest products</Paragraph>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div style={{ height: 300, background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
+                  <div style={{ textAlign: 'center' }}>
+                    <Title level={2} style={{ color: 'white', marginBottom: 16 }}>Free Shipping</Title>
+                    <Paragraph style={{ fontSize: '18px', color: 'rgba(255,255,255,0.9)' }}>On orders over $50</Paragraph>
+                  </div>
+                </div>
+              </div>
+            </Carousel>
+          </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -189,8 +224,8 @@ export default function Home() {
                             const images = JSON.parse(product.Images)
                             const imageUrl = images[0]?.ImageUrl
                             return imageUrl ? (
-                              <img 
-                                src={`${process.env.NEXT_PUBLIC_BASE_URL}${imageUrl}`} 
+                              <img
+                                src={`${process.env.NEXT_PUBLIC_BASE_URL}${imageUrl}`}
                                 alt={product.ProductName}
                                 style={{ height: 250, objectFit: 'cover' }}
                               />

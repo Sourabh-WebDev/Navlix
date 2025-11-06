@@ -28,7 +28,7 @@ export default function Login() {
         console.log(response?.data.token, 'response')
         // Fetch user information
         const userResponse = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}api/User/secure`, {
-          headers: { Authorization: `Bearer ${response}` }
+          headers: { Authorization: `Bearer ${response?.data.token}` }
         })
         localStorage.setItem('user', JSON.stringify(userResponse.data))
       }

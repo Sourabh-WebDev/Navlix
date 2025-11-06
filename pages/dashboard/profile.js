@@ -1,5 +1,5 @@
 import { Layout, Menu, Button, Typography, Card, Form, Input, Row, Col } from 'antd'
-import { DashboardOutlined, ShoppingOutlined, UserOutlined, SettingOutlined } from '@ant-design/icons'
+import { DashboardOutlined, ShoppingOutlined, UserOutlined, SettingOutlined, ClockCircleOutlined } from '@ant-design/icons'
 import { logout } from '../../utils/auth'
 import { useEffect } from 'react'
 import Link from 'next/link'
@@ -39,6 +39,9 @@ export default function Profile() {
             </Menu.Item>
             <Menu.Item key="orders" icon={<ShoppingOutlined />}>
               <Link href="/dashboard/orders">Orders</Link>
+            </Menu.Item>
+            <Menu.Item key="timesheet" icon={<ClockCircleOutlined />}>
+              <Link href="/dashboard/timesheet">Timesheet</Link>
             </Menu.Item>
             <Menu.Item key="profile" icon={<UserOutlined />}>
               <Link href="/dashboard/profile">Profile</Link>
