@@ -34,7 +34,12 @@ export default function Login() {
       }
 
       toast.success('Login successful!')
-      window.location.href = '/dashboard'
+      if (userData.roleList.includes('customer')) {
+        navigate('/home');
+      } else {
+        navigate('/dashboard');
+      }
+
     } catch (error) {
       toast.error('Login failed. Please check your credentials.')
     }

@@ -11,8 +11,21 @@ const { TextArea } = Input
 export default function Profile() {
   useEffect(() => {
     const token = localStorage.getItem('token')
+    const user = localStorage.getItem('user')
+    
     if (!token) {
       window.location.href = '/login'
+      return
+    }
+    
+    try {
+      const userData = JSON.parse(user)
+      if (userData?.roleList === 'customer') {
+        window.location.href = '/'
+        return
+      }
+    } catch (error) {
+      console.error('Error parsing user data:', error)
     }
   }, [])
 

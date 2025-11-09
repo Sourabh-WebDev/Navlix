@@ -2,6 +2,8 @@
 node_modules/
 
 # Next.js
+next
+.next
 .next/
 out/
 
@@ -53,3 +55,10 @@ Thumbs.db
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+
+# Chunks and compressed files
+*.chunk.js
+*.chunk.css
+*.gz
+*.br
+*.pack.gz

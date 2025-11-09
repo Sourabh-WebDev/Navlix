@@ -12,8 +12,21 @@ export default function Dashboard() {
   const { user, updateUser, logout } = useUser()
   useEffect(() => {
     const token = localStorage.getItem('token')
+    const user = localStorage.getItem('user')
+    
     if (!token) {
       window.location.href = '/login'
+      return
+    }
+    
+    try {
+      const userData = JSON.parse(user)
+      if (userData?.roleList === 'customer') {
+        window.location.href = '/'
+        return
+      }
+    } catch (error) {
+      console.error('Error parsing user data:', error)
     }
   }, [])
 

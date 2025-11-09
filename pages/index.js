@@ -34,12 +34,17 @@ export default function Home() {
   const [searchOptions, setSearchOptions] = useState([])
   const [featuredProducts, setFeaturedProducts] = useState([])
   const [token, setToken] = useState(null)
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200)
 
   useEffect(() => {
     setToken(localStorage.getItem('token'))
     axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}api/Product`)
       .then(res => setFeaturedProducts(res.data.items?.slice(0, 3) || []))
       .catch(err => console.error('Error fetching products:', err))
+
+    const handleResize = () => setWindowWidth(window.innerWidth)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
   }, [])
 
   const handleSearch = async (value) => {
@@ -75,11 +80,11 @@ export default function Home() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <Header style={{ background: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', padding: '0 24px', height: 'auto', lineHeight: 'normal' }}>
-          <Row justify="space-between" align="middle" style={{ height: 64 }}>
-            <Col xs={8} sm={6} md={4}>
+        <Header style={{ background: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', padding: '0 16px', height: 'auto', lineHeight: 'normal' }}>
+          <Row justify="space-between" align="middle" style={{ minHeight: 64 }}>
+            <Col xs={6} sm={6} md={4}>
               <motion.div whileHover={{ scale: 1.05 }}>
-                <Title level={3} style={{ margin: 0, color: '#52c41a' }}>Navlix</Title>
+                <Title level={3} style={{ margin: 0, color: '#52c41a', fontSize: windowWidth < 768 ? '18px' : '24px' }}>Navlix</Title>
               </motion.div>
             </Col>
             <Col xs={0} sm={0} md={12}>
@@ -89,32 +94,32 @@ export default function Home() {
                 <Menu.Item key="contact">Contact</Menu.Item>
               </Menu>
             </Col>
-            <Col xs={16} sm={18} md={8} style={{ textAlign: 'right' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 8 }}>
+            <Col xs={18} sm={18} md={8} style={{ textAlign: 'right' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 4, flexWrap: 'wrap' }}>
                 {token ?
                   <motion.span whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={{ display: 'inline-block' }}>
-                    <Avatar style={{ backgroundColor: '#62a86eff', verticalAlign: 'middle' }} size="large" gap={2}>
+                    <Avatar style={{ backgroundColor: '#62a86eff', verticalAlign: 'middle' }} size={windowWidth < 768 ? 'default' : 'large'} gap={2}>
                       {user?.username ? user.username.charAt(0).toUpperCase() : 'U'}
                     </Avatar>
                   </motion.span> :
                   <Link href="/login">
                     <motion.span whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={{ display: 'inline-block' }}>
-                      <Button type="text">Login</Button>
+                      <Button type="text" size={windowWidth < 768 ? 'small' : 'middle'}>Login</Button>
                     </motion.span>
                   </Link>}
                 {!token && <Link href="/signup">
                   <motion.span whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={{ display: 'inline-block' }}>
-                    <Button type="default">Sign Up</Button>
+                    <Button type="default" size={windowWidth < 768 ? 'small' : 'middle'}>Sign Up</Button>
                   </motion.span>
                 </Link>}
-                {user?.username && <Link href="/dashboard">
+                {user?.roleList.includes('admin') && <Link href="/dashboard">
                   <motion.span whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={{ display: 'inline-block' }}>
-                    <Button type="default">Dashboard</Button>
+                    <Button type="default" size={windowWidth < 768 ? 'small' : 'middle'}>Dashboard</Button>
                   </motion.span>
                 </Link>}
                 <motion.span whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={{ display: 'inline-block' }}>
-                  <Button type="primary" icon={<ShoppingCartOutlined />}>
-                    Cart (0)
+                  <Button type="primary" icon={<ShoppingCartOutlined />} size={windowWidth < 768 ? 'small' : 'middle'}>
+                    {windowWidth < 576 ? 'Cart' : 'Cart (0)'}
                   </Button>
                 </motion.span>
               </div>
@@ -125,13 +130,23 @@ export default function Home() {
 
       <Content>
         <motion.div
-          style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', padding: '100px 24px', textAlign: 'center', color: 'white' }}
+          style={{ 
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', 
+            padding: windowWidth < 768 ? '60px 16px' : '100px 24px', 
+            textAlign: 'center', 
+            color: 'white' 
+          }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
         >
           <motion.div {...fadeInUp}>
-            <Title level={1} style={{ fontSize: '3.5rem', marginBottom: 24, color: 'white' }}>
+            <Title level={1} style={{ 
+              fontSize: windowWidth < 576 ? '2rem' : windowWidth < 768 ? '2.5rem' : '3.5rem', 
+              marginBottom: 24, 
+              color: 'white',
+              lineHeight: 1.2
+            }}>
               Premium Products for Modern Living
             </Title>
           </motion.div>
@@ -140,7 +155,13 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <Paragraph style={{ fontSize: '1.3rem', maxWidth: 600, margin: '0 auto 40px', color: 'rgba(255,255,255,0.9)' }}>
+            <Paragraph style={{ 
+              fontSize: windowWidth < 576 ? '1rem' : '1.3rem', 
+              maxWidth: 600, 
+              margin: '0 auto 40px', 
+              color: 'rgba(255,255,255,0.9)',
+              padding: '0 16px'
+            }}>
               Discover our curated collection of high-quality products designed to enhance your lifestyle.
             </Paragraph>
           </motion.div>
@@ -165,7 +186,7 @@ export default function Home() {
           </motion.div>
         </motion.div>
 
-        <div style={{ padding: '80px 24px', margin: '0 auto' }}>
+        <div style={{ padding: windowWidth < 768 ? '40px 16px' : '80px 24px', margin: '0 auto' }}>
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -175,26 +196,68 @@ export default function Home() {
           >
             <Carousel autoplay dotPosition="bottom" style={{ borderRadius: 12, overflow: 'hidden' }}>
               <div>
-                <div style={{ height: 300, background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
-                  <div style={{ textAlign: 'center' }}>
-                    <Title level={2} style={{ color: 'white', marginBottom: 16 }}>Special Offers</Title>
-                    <Paragraph style={{ fontSize: '18px', color: 'rgba(255,255,255,0.9)' }}>Up to 50% off on selected items</Paragraph>
+                <div style={{ 
+                  height: windowWidth < 768 ? 200 : 300, 
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  color: 'white' 
+                }}>
+                  <div style={{ textAlign: 'center', padding: '0 16px' }}>
+                    <Title level={2} style={{ 
+                      color: 'white', 
+                      marginBottom: 16, 
+                      fontSize: windowWidth < 576 ? '20px' : '28px' 
+                    }}>Special Offers</Title>
+                    <Paragraph style={{ 
+                      fontSize: windowWidth < 576 ? '14px' : '18px', 
+                      color: 'rgba(255,255,255,0.9)' 
+                    }}>Up to 50% off on selected items</Paragraph>
                   </div>
                 </div>
               </div>
               <div>
-                <div style={{ height: 300, background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
-                  <div style={{ textAlign: 'center' }}>
-                    <Title level={2} style={{ color: 'white', marginBottom: 16 }}>New Arrivals</Title>
-                    <Paragraph style={{ fontSize: '18px', color: 'rgba(255,255,255,0.9)' }}>Discover the latest products</Paragraph>
+                <div style={{ 
+                  height: windowWidth < 768 ? 200 : 300, 
+                  background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  color: 'white' 
+                }}>
+                  <div style={{ textAlign: 'center', padding: '0 16px' }}>
+                    <Title level={2} style={{ 
+                      color: 'white', 
+                      marginBottom: 16, 
+                      fontSize: windowWidth < 576 ? '20px' : '28px' 
+                    }}>New Arrivals</Title>
+                    <Paragraph style={{ 
+                      fontSize: windowWidth < 576 ? '14px' : '18px', 
+                      color: 'rgba(255,255,255,0.9)' 
+                    }}>Discover the latest products</Paragraph>
                   </div>
                 </div>
               </div>
               <div>
-                <div style={{ height: 300, background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
-                  <div style={{ textAlign: 'center' }}>
-                    <Title level={2} style={{ color: 'white', marginBottom: 16 }}>Free Shipping</Title>
-                    <Paragraph style={{ fontSize: '18px', color: 'rgba(255,255,255,0.9)' }}>On orders over $50</Paragraph>
+                <div style={{ 
+                  height: windowWidth < 768 ? 200 : 300, 
+                  background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  color: 'white' 
+                }}>
+                  <div style={{ textAlign: 'center', padding: '0 16px' }}>
+                    <Title level={2} style={{ 
+                      color: 'white', 
+                      marginBottom: 16, 
+                      fontSize: windowWidth < 576 ? '20px' : '28px' 
+                    }}>Free Shipping</Title>
+                    <Paragraph style={{ 
+                      fontSize: windowWidth < 576 ? '14px' : '18px', 
+                      color: 'rgba(255,255,255,0.9)' 
+                    }}>On orders over $50</Paragraph>
                   </div>
                 </div>
               </div>
@@ -206,7 +269,11 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <Title level={2} style={{ textAlign: 'center', marginBottom: 60, fontSize: '2.5rem' }}>
+            <Title level={2} style={{ 
+              textAlign: 'center', 
+              marginBottom: windowWidth < 768 ? 40 : 60, 
+              fontSize: windowWidth < 576 ? '1.8rem' : '2.5rem' 
+            }}>
               Featured Products
             </Title>
           </motion.div>
@@ -256,7 +323,7 @@ export default function Home() {
                           ₹{product.DiscountedPrice}
                         </Title>
                         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                          <Button type="primary" size="large">
+                          <Button type="primary" size={windowWidth < 576 ? 'middle' : 'large'}>
                             Add to Cart
                           </Button>
                         </motion.div>
@@ -269,7 +336,7 @@ export default function Home() {
           </motion.div>
         </div>
 
-        <div style={{ background: '#f8f9fa', padding: '80px 24px' }}>
+        <div style={{ background: '#f8f9fa', padding: windowWidth < 768 ? '40px 16px' : '80px 24px' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <motion.div
               variants={staggerContainer}
@@ -314,7 +381,7 @@ export default function Home() {
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
       >
-        <Footer style={{ background: '#001529', padding: '60px 24px 24px' }}>
+        <Footer style={{ background: '#001529', padding: windowWidth < 768 ? '40px 16px 16px' : '60px 24px 24px' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <motion.div
               variants={staggerContainer}
