@@ -1,4 +1,4 @@
-import { Layout, Menu, Button, Typography, Row, Col, Card, Avatar, Input, AutoComplete, Carousel } from 'antd'
+import { Layout, Menu, Button, Typography, Row, Col, Card, Avatar, Input, AutoComplete, Carousel, Space } from 'antd'
 import { ShoppingCartOutlined, TruckOutlined, SafetyOutlined, UndoOutlined } from '@ant-design/icons'
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
@@ -88,11 +88,15 @@ export default function Home() {
               </motion.div>
             </Col>
             <Col xs={0} sm={0} md={12}>
-              <Menu mode="horizontal" style={{ border: 'none', background: 'transparent', justifyContent: 'center' }}>
-                <Menu.Item key="products">Products</Menu.Item>
-                <Menu.Item key="about">About</Menu.Item>
-                <Menu.Item key="contact">Contact</Menu.Item>
-              </Menu>
+              <Menu 
+                mode="horizontal" 
+                style={{ border: 'none', background: 'transparent', justifyContent: 'center' }}
+                items={[
+                  { key: 'products', label: 'Products' },
+                  { key: 'about', label: 'About' },
+                  { key: 'contact', label: 'Contact' }
+                ]}
+              />
             </Col>
             <Col xs={18} sm={18} md={8} style={{ textAlign: 'right' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 4, flexWrap: 'wrap' }}>
@@ -422,12 +426,12 @@ export default function Home() {
                   <motion.div variants={fadeInUp}>
                     <Title level={4} style={{ color: 'white', marginBottom: 16 }}>Newsletter</Title>
                     <Paragraph style={{ color: 'rgba(255,255,255,0.65)', marginBottom: 16 }}>Subscribe for updates and exclusive offers</Paragraph>
-                    <Input.Group compact>
+                    <Space.Compact style={{ width: '100%' }}>
                       <Input placeholder="Enter your email" style={{ width: 'calc(100% - 100px)' }} />
                       <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                         <Button type="primary" style={{ width: 100 }}>Subscribe</Button>
                       </motion.div>
-                    </Input.Group>
+                    </Space.Compact>
                   </motion.div>
                 </Col>
               </Row>

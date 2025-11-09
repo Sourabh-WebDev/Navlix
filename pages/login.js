@@ -34,7 +34,7 @@ export default function Login() {
       }
 
       toast.success('Login successful!')
-      if (userData.roleList.includes('customer')) {
+      if (user.roleList.includes('customer')) {
         navigate('/home');
       } else {
         navigate('/dashboard');
