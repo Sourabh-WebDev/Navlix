@@ -34,11 +34,12 @@ export default function Login() {
       }
 
       toast.success('Login successful!')
-      if (user.roleList.includes('customer')) {
-        navigate('/');
-      } else {
-        navigate('/dashboard');
-      }
+      navigate('/dashboard');
+      // if (user.roleList.includes('customer')) {
+      //   navigate('/');
+      // } else {
+      //   navigate('/dashboard');
+      // }
 
     } catch (error) {
       toast.error('Login failed. Please check your credentials.')
