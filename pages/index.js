@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useUser } from '../contexts/UserContext'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const { Header, Content, Footer } = Layout
 const { Title, Paragraph } = Typography
@@ -84,17 +85,24 @@ export default function Home() {
           <Row justify="space-between" align="middle" style={{ minHeight: 64 }}>
             <Col xs={6} sm={6} md={4}>
               <motion.div whileHover={{ scale: 1.05 }}>
-                <Title level={3} style={{ margin: 0, color: '#52c41a', fontSize: windowWidth < 768 ? '18px' : '24px' }}>Navlix</Title>
+                <Image
+                  src="/images/Navlix.jpeg"
+                  alt="Navlix Logo"
+                  width={windowWidth < 768 ? 80 : 120}
+                  height={windowWidth < 768 ? 30 : 40}
+                  style={{ objectFit: 'contain' }}
+                />
               </motion.div>
             </Col>
             <Col xs={0} sm={0} md={12}>
-              <Menu 
-                mode="horizontal" 
+              <Menu
+                mode="horizontal"
                 style={{ border: 'none', background: 'transparent', justifyContent: 'center' }}
                 items={[
+                  { key: 'home', label: <Link href="/">Home</Link> },
                   { key: 'products', label: 'Products' },
-                  { key: 'about', label: 'About' },
-                  { key: 'contact', label: 'Contact' }
+                  { key: 'about', label: <Link href="/about">About</Link> },
+                  { key: 'contact', label: <Link href="/contact">Contact</Link> }
                 ]}
               />
             </Col>
@@ -134,20 +142,20 @@ export default function Home() {
 
       <Content>
         <motion.div
-          style={{ 
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', 
-            padding: windowWidth < 768 ? '60px 16px' : '100px 24px', 
-            textAlign: 'center', 
-            color: 'white' 
+          style={{
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            padding: windowWidth < 768 ? '60px 16px' : '100px 24px',
+            textAlign: 'center',
+            color: 'white'
           }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
         >
           <motion.div {...fadeInUp}>
-            <Title level={1} style={{ 
-              fontSize: windowWidth < 576 ? '2rem' : windowWidth < 768 ? '2.5rem' : '3.5rem', 
-              marginBottom: 24, 
+            <Title level={1} style={{
+              fontSize: windowWidth < 576 ? '2rem' : windowWidth < 768 ? '2.5rem' : '3.5rem',
+              marginBottom: 24,
               color: 'white',
               lineHeight: 1.2
             }}>
@@ -159,10 +167,10 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <Paragraph style={{ 
-              fontSize: windowWidth < 576 ? '1rem' : '1.3rem', 
-              maxWidth: 600, 
-              margin: '0 auto 40px', 
+            <Paragraph style={{
+              fontSize: windowWidth < 576 ? '1rem' : '1.3rem',
+              maxWidth: 600,
+              margin: '0 auto 40px',
               color: 'rgba(255,255,255,0.9)',
               padding: '0 16px'
             }}>
@@ -200,67 +208,67 @@ export default function Home() {
           >
             <Carousel autoplay dotPosition="bottom" style={{ borderRadius: 12, overflow: 'hidden' }}>
               <div>
-                <div style={{ 
-                  height: windowWidth < 768 ? 200 : 300, 
-                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center', 
-                  color: 'white' 
+                <div style={{
+                  height: windowWidth < 768 ? 200 : 300,
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'white'
                 }}>
                   <div style={{ textAlign: 'center', padding: '0 16px' }}>
-                    <Title level={2} style={{ 
-                      color: 'white', 
-                      marginBottom: 16, 
-                      fontSize: windowWidth < 576 ? '20px' : '28px' 
+                    <Title level={2} style={{
+                      color: 'white',
+                      marginBottom: 16,
+                      fontSize: windowWidth < 576 ? '20px' : '28px'
                     }}>Special Offers</Title>
-                    <Paragraph style={{ 
-                      fontSize: windowWidth < 576 ? '14px' : '18px', 
-                      color: 'rgba(255,255,255,0.9)' 
+                    <Paragraph style={{
+                      fontSize: windowWidth < 576 ? '14px' : '18px',
+                      color: 'rgba(255,255,255,0.9)'
                     }}>Up to 50% off on selected items</Paragraph>
                   </div>
                 </div>
               </div>
               <div>
-                <div style={{ 
-                  height: windowWidth < 768 ? 200 : 300, 
-                  background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)', 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center', 
-                  color: 'white' 
+                <div style={{
+                  height: windowWidth < 768 ? 200 : 300,
+                  background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'white'
                 }}>
                   <div style={{ textAlign: 'center', padding: '0 16px' }}>
-                    <Title level={2} style={{ 
-                      color: 'white', 
-                      marginBottom: 16, 
-                      fontSize: windowWidth < 576 ? '20px' : '28px' 
+                    <Title level={2} style={{
+                      color: 'white',
+                      marginBottom: 16,
+                      fontSize: windowWidth < 576 ? '20px' : '28px'
                     }}>New Arrivals</Title>
-                    <Paragraph style={{ 
-                      fontSize: windowWidth < 576 ? '14px' : '18px', 
-                      color: 'rgba(255,255,255,0.9)' 
+                    <Paragraph style={{
+                      fontSize: windowWidth < 576 ? '14px' : '18px',
+                      color: 'rgba(255,255,255,0.9)'
                     }}>Discover the latest products</Paragraph>
                   </div>
                 </div>
               </div>
               <div>
-                <div style={{ 
-                  height: windowWidth < 768 ? 200 : 300, 
-                  background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)', 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center', 
-                  color: 'white' 
+                <div style={{
+                  height: windowWidth < 768 ? 200 : 300,
+                  background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'white'
                 }}>
                   <div style={{ textAlign: 'center', padding: '0 16px' }}>
-                    <Title level={2} style={{ 
-                      color: 'white', 
-                      marginBottom: 16, 
-                      fontSize: windowWidth < 576 ? '20px' : '28px' 
+                    <Title level={2} style={{
+                      color: 'white',
+                      marginBottom: 16,
+                      fontSize: windowWidth < 576 ? '20px' : '28px'
                     }}>Free Shipping</Title>
-                    <Paragraph style={{ 
-                      fontSize: windowWidth < 576 ? '14px' : '18px', 
-                      color: 'rgba(255,255,255,0.9)' 
+                    <Paragraph style={{
+                      fontSize: windowWidth < 576 ? '14px' : '18px',
+                      color: 'rgba(255,255,255,0.9)'
                     }}>On orders over $50</Paragraph>
                   </div>
                 </div>
@@ -273,10 +281,10 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <Title level={2} style={{ 
-              textAlign: 'center', 
-              marginBottom: windowWidth < 768 ? 40 : 60, 
-              fontSize: windowWidth < 576 ? '1.8rem' : '2.5rem' 
+            <Title level={2} style={{
+              textAlign: 'center',
+              marginBottom: windowWidth < 768 ? 40 : 60,
+              fontSize: windowWidth < 576 ? '1.8rem' : '2.5rem'
             }}>
               Featured Products
             </Title>
@@ -396,7 +404,13 @@ export default function Home() {
               <Row gutter={[32, 32]}>
                 <Col xs={24} md={6}>
                   <motion.div variants={fadeInUp}>
-                    <Title level={3} style={{ color: 'white', marginBottom: 16 }}>Navlix</Title>
+                    <Image
+                      src="/images/Navlix.jpeg"
+                      alt="Navlix Logo"
+                      width={120}
+                      height={40}
+                      style={{ objectFit: 'contain', marginBottom: 16 }}
+                    />
                     <Paragraph style={{ color: 'rgba(255,255,255,0.65)', lineHeight: 1.6 }}>
                       Your trusted partner for premium products and exceptional customer service.
                     </Paragraph>
@@ -407,18 +421,28 @@ export default function Home() {
                     <Title level={4} style={{ color: 'white', marginBottom: 16 }}>Quick Links</Title>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                       <motion.a href="#" style={{ color: 'rgba(255,255,255,0.65)', textDecoration: 'none' }} whileHover={{ color: 'white', x: 5 }}>Products</motion.a>
-                      <motion.a href="#" style={{ color: 'rgba(255,255,255,0.65)', textDecoration: 'none' }} whileHover={{ color: 'white', x: 5 }}>About Us</motion.a>
-                      <motion.a href="#" style={{ color: 'rgba(255,255,255,0.65)', textDecoration: 'none' }} whileHover={{ color: 'white', x: 5 }}>Contact</motion.a>
+                      <motion.a href="/about" style={{ color: 'rgba(255,255,255,0.65)', textDecoration: 'none' }} whileHover={{ color: 'white', x: 5 }}>About Us</motion.a>
+                      <motion.a href="/contact" style={{ color: 'rgba(255,255,255,0.65)', textDecoration: 'none' }} whileHover={{ color: 'white', x: 5 }}>Contact</motion.a>
+                      <motion.a href="/shipping-policy" style={{ color: 'rgba(255,255,255,0.65)', textDecoration: 'none' }} whileHover={{ color: 'white', x: 5 }}>Shipping Policy</motion.a>
                     </div>
                   </motion.div>
                 </Col>
                 <Col xs={24} md={6}>
                   <motion.div variants={fadeInUp}>
-                    <Title level={4} style={{ color: 'white', marginBottom: 16 }}>Support</Title>
+                    <Title level={4} style={{ color: 'white', marginBottom: 16 }}>Legal</Title>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                      <motion.a href="#" style={{ color: 'rgba(255,255,255,0.65)', textDecoration: 'none' }} whileHover={{ color: 'white', x: 5 }}>Help Center</motion.a>
-                      <motion.a href="#" style={{ color: 'rgba(255,255,255,0.65)', textDecoration: 'none' }} whileHover={{ color: 'white', x: 5 }}>Returns</motion.a>
-                      <motion.a href="#" style={{ color: 'rgba(255,255,255,0.65)', textDecoration: 'none' }} whileHover={{ color: 'white', x: 5 }}>Shipping Info</motion.a>
+                      <Link href="/cancellation-refunds">
+                        <motion.span style={{ color: 'rgba(255,255,255,0.65)', textDecoration: 'none', cursor: 'pointer' }} whileHover={{ color: 'white', x: 5 }}>Cancellation & Refunds</motion.span>
+                      </Link>
+                      <Link href="/privacy-policy">
+                        <motion.span style={{ color: 'rgba(255,255,255,0.65)', textDecoration: 'none', cursor: 'pointer' }} whileHover={{ color: 'white', x: 5 }}>Privacy Policy</motion.span>
+                      </Link>
+                      <Link href="/terms-conditions">
+                        <motion.span style={{ color: 'rgba(255,255,255,0.65)', textDecoration: 'none', cursor: 'pointer' }} whileHover={{ color: 'white', x: 5 }}>Terms & Conditions</motion.span>
+                      </Link>
+                      <Link href="/legal-disclaimer">
+                        <motion.span style={{ color: 'rgba(255,255,255,0.65)', textDecoration: 'none', cursor: 'pointer' }} whileHover={{ color: 'white', x: 5 }}>Legal Disclaimer</motion.span>
+                      </Link>
                     </div>
                   </motion.div>
                 </Col>
