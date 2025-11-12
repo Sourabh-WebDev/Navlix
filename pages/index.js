@@ -198,7 +198,7 @@ export default function Home() {
           </motion.div>
         </motion.div>
 
-        <div style={{ padding: windowWidth < 768 ? '40px 16px' : '80px 24px', margin: '0 auto' }}>
+        <div style={{ padding: windowWidth < 576 ? '20px 8px' : windowWidth < 768 ? '30px 12px' : windowWidth < 1024 ? '50px 16px' : '80px 24px', margin: '0 auto' }}>
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -348,7 +348,7 @@ export default function Home() {
           </motion.div>
         </div>
 
-        <div style={{ background: '#f8f9fa', padding: windowWidth < 768 ? '40px 16px' : '80px 24px' }}>
+        <div style={{ background: '#f8f9fa', padding: windowWidth < 576 ? '20px 8px' : windowWidth < 768 ? '30px 12px' : windowWidth < 1024 ? '50px 16px' : '80px 24px' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <motion.div
               variants={staggerContainer}
@@ -356,13 +356,13 @@ export default function Home() {
               whileInView="animate"
               viewport={{ once: true }}
             >
-              <Row gutter={[48, 48]} justify="center">
+              <Row gutter={windowWidth < 576 ? [16, 16] : windowWidth < 768 ? [24, 24] : windowWidth < 1024 ? [32, 32] : [48, 48]} justify="center">
                 {[
                   { icon: TruckOutlined, title: 'Free Shipping', desc: 'Free shipping on all orders over $50. Fast and reliable delivery.', color: '#1890ff' },
                   { icon: SafetyOutlined, title: 'Secure Payment', desc: '100% secure payment processing with SSL encryption.', color: '#52c41a' },
                   { icon: UndoOutlined, title: 'Easy Returns', desc: '30-day hassle-free return policy for your peace of mind.', color: '#fa8c16' }
                 ].map((feature, index) => (
-                  <Col xs={24} md={8} key={index} style={{ textAlign: 'center' }}>
+                  <Col xs={24} sm={12} md={8} lg={8} key={index} style={{ textAlign: 'center' }}>
                     <motion.div
                       variants={fadeInUp}
                       whileHover={{ scale: 1.05, y: -5 }}
@@ -372,12 +372,12 @@ export default function Home() {
                         whileHover={{ rotate: 360 }}
                         transition={{ duration: 0.6 }}
                       >
-                        <Avatar size={80} style={{ backgroundColor: feature.color, marginBottom: 24 }}>
-                          <feature.icon style={{ fontSize: 32 }} />
+                        <Avatar size={windowWidth < 576 ? 60 : windowWidth < 768 ? 70 : 80} style={{ backgroundColor: feature.color, marginBottom: windowWidth < 576 ? 16 : 24 }}>
+                          <feature.icon style={{ fontSize: windowWidth < 576 ? 24 : windowWidth < 768 ? 28 : 32 }} />
                         </Avatar>
                       </motion.div>
-                      <Title level={3} style={{ marginBottom: 16 }}>{feature.title}</Title>
-                      <Paragraph style={{ fontSize: '16px', color: '#666' }}>{feature.desc}</Paragraph>
+                      <Title level={3} style={{ marginBottom: 16, fontSize: windowWidth < 576 ? '16px' : windowWidth < 768 ? '18px' : '20px' }}>{feature.title}</Title>
+                      <Paragraph style={{ fontSize: windowWidth < 576 ? '12px' : windowWidth < 768 ? '14px' : '16px', color: '#666' }}>{feature.desc}</Paragraph>
                     </motion.div>
                   </Col>
                 ))}

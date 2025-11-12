@@ -42,22 +42,22 @@ export default function CommonLayout({ children }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <Header style={{ background: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', padding: '0 16px', height: 'auto', lineHeight: 'normal' }}>
+        <Header style={{ background: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', padding: windowWidth < 576 ? '0 8px' : '0 16px', height: 'auto', lineHeight: 'normal' }}>
           <Row justify="space-between" align="middle" style={{ minHeight: 64 }}>
-            <Col xs={6} sm={6} md={4}>
+            <Col xs={8} sm={6} md={4} lg={3} xl={3}>
               <Link href="/">
                 <motion.div whileHover={{ scale: 1.05 }} style={{ cursor: 'pointer' }}>
                   <Image 
                     src="/images/Navlix.jpeg" 
                     alt="Navlix Logo" 
-                    width={windowWidth < 768 ? 80 : 120} 
-                    height={windowWidth < 768 ? 30 : 40}
+                    width={windowWidth < 576 ? 60 : windowWidth < 768 ? 80 : windowWidth < 1024 ? 100 : 120} 
+                    height={windowWidth < 576 ? 25 : windowWidth < 768 ? 30 : windowWidth < 1024 ? 35 : 40}
                     style={{ objectFit: 'contain' }}
                   />
                 </motion.div>
               </Link>
             </Col>
-            <Col xs={0} sm={0} md={12}>
+            <Col xs={0} sm={0} md={0} lg={14} xl={14}>
               <Menu
                 mode="horizontal"
                 style={{ border: 'none', background: 'transparent', justifyContent: 'center' }}
@@ -69,8 +69,8 @@ export default function CommonLayout({ children }) {
                 ]}
               />
             </Col>
-            <Col xs={18} sm={18} md={8} style={{ textAlign: 'right' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 4, flexWrap: 'wrap' }}>
+            <Col xs={16} sm={18} md={20} lg={7} xl={7} style={{ textAlign: 'right' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: windowWidth < 576 ? 2 : windowWidth < 768 ? 3 : 4, flexWrap: 'wrap' }}>
                 {token ?
                   <motion.span whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={{ display: 'inline-block' }}>
                     <Avatar style={{ backgroundColor: '#62a86eff', verticalAlign: 'middle' }} size={windowWidth < 768 ? 'default' : 'large'} gap={2}>
@@ -79,22 +79,22 @@ export default function CommonLayout({ children }) {
                   </motion.span> :
                   <Link href="/login">
                     <motion.span whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={{ display: 'inline-block' }}>
-                      <Button type="text" size={windowWidth < 768 ? 'small' : 'middle'}>Login</Button>
+                      <Button type="text" size={windowWidth < 576 ? 'small' : windowWidth < 1024 ? 'small' : 'middle'}>{windowWidth < 576 ? 'Login' : 'Login'}</Button>
                     </motion.span>
                   </Link>}
                 {!token && <Link href="/signup">
                   <motion.span whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={{ display: 'inline-block' }}>
-                    <Button type="default" size={windowWidth < 768 ? 'small' : 'middle'}>Sign Up</Button>
+                    <Button type="default" size={windowWidth < 576 ? 'small' : windowWidth < 1024 ? 'small' : 'middle'}>{windowWidth < 576 ? 'Join' : 'Sign Up'}</Button>
                   </motion.span>
                 </Link>}
                 {user?.roleList.includes('admin') && <Link href="/dashboard">
                   <motion.span whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={{ display: 'inline-block' }}>
-                    <Button type="default" size={windowWidth < 768 ? 'small' : 'middle'}>Dashboard</Button>
+                    <Button type="default" size={windowWidth < 576 ? 'small' : windowWidth < 1024 ? 'small' : 'middle'}>{windowWidth < 768 ? 'Admin' : 'Dashboard'}</Button>
                   </motion.span>
                 </Link>}
                 <motion.span whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={{ display: 'inline-block' }}>
-                  <Button type="primary" icon={<ShoppingCartOutlined />} size={windowWidth < 768 ? 'small' : 'middle'}>
-                    {windowWidth < 576 ? 'Cart' : 'Cart (0)'}
+                  <Button type="primary" icon={<ShoppingCartOutlined />} size={windowWidth < 576 ? 'small' : windowWidth < 1024 ? 'small' : 'middle'}>
+                    {windowWidth < 576 ? '' : windowWidth < 768 ? 'Cart' : 'Cart (0)'}
                   </Button>
                 </motion.span>
               </div>
@@ -113,7 +113,7 @@ export default function CommonLayout({ children }) {
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
       >
-        <Footer style={{ background: '#001529', padding: windowWidth < 768 ? '40px 16px 16px' : '60px 24px 24px' }}>
+        <Footer style={{ background: '#001529', padding: windowWidth < 576 ? '20px 8px 8px' : windowWidth < 768 ? '30px 12px 12px' : windowWidth < 1024 ? '40px 16px 16px' : '60px 24px 24px' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <motion.div
               variants={staggerContainer}
@@ -121,24 +121,24 @@ export default function CommonLayout({ children }) {
               whileInView="animate"
               viewport={{ once: true }}
             >
-              <Row gutter={[32, 32]}>
-                <Col xs={24} md={6}>
+              <Row gutter={windowWidth < 576 ? [8, 16] : windowWidth < 768 ? [16, 20] : windowWidth < 1024 ? [24, 24] : [32, 32]}>
+                <Col xs={24} sm={12} md={6} lg={6}>
                   <motion.div variants={fadeInUp}>
                     <Image 
                       src="/images/Navlix.jpeg" 
                       alt="Navlix Logo" 
-                      width={120} 
-                      height={40}
+                      width={windowWidth < 576 ? 80 : windowWidth < 768 ? 100 : 120} 
+                      height={windowWidth < 576 ? 30 : windowWidth < 768 ? 35 : 40}
                       style={{ objectFit: 'contain', marginBottom: 16 }}
                     />
-                    <Paragraph style={{ color: 'rgba(255,255,255,0.65)', lineHeight: 1.6 }}>
+                    <Paragraph style={{ color: 'rgba(255,255,255,0.65)', lineHeight: 1.6, fontSize: windowWidth < 576 ? '12px' : '14px' }}>
                       Your trusted partner for premium products and exceptional customer service.
                     </Paragraph>
                   </motion.div>
                 </Col>
-                <Col xs={24} md={6}>
+                <Col xs={24} sm={12} md={6} lg={6}>
                   <motion.div variants={fadeInUp}>
-                    <Title level={4} style={{ color: 'white', marginBottom: 16 }}>Quick Links</Title>
+                    <Title level={4} style={{ color: 'white', marginBottom: 16, fontSize: windowWidth < 576 ? '14px' : '16px' }}>Quick Links</Title>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                       <motion.a href="#" style={{ color: 'rgba(255,255,255,0.65)', textDecoration: 'none' }} whileHover={{ color: 'white', x: 5 }}>Products</motion.a>
                       <Link href="/about">
@@ -153,9 +153,9 @@ export default function CommonLayout({ children }) {
                     </div>
                   </motion.div>
                 </Col>
-                <Col xs={24} md={6}>
+                <Col xs={24} sm={12} md={6} lg={6}>
                   <motion.div variants={fadeInUp}>
-                    <Title level={4} style={{ color: 'white', marginBottom: 16 }}>Legal</Title>
+                    <Title level={4} style={{ color: 'white', marginBottom: 16, fontSize: windowWidth < 576 ? '14px' : '16px' }}>Legal</Title>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                       <Link href="/cancellation-refunds">
                         <motion.span style={{ color: 'rgba(255,255,255,0.65)', textDecoration: 'none', cursor: 'pointer' }} whileHover={{ color: 'white', x: 5 }}>Cancellation & Refunds</motion.span>
@@ -172,9 +172,9 @@ export default function CommonLayout({ children }) {
                     </div>
                   </motion.div>
                 </Col>
-                <Col xs={24} md={6}>
+                <Col xs={24} sm={12} md={6} lg={6}>
                   <motion.div variants={fadeInUp}>
-                    <Title level={4} style={{ color: 'white', marginBottom: 16 }}>Follow Us</Title>
+                    <Title level={4} style={{ color: 'white', marginBottom: 16, fontSize: windowWidth < 576 ? '14px' : '16px' }}>Follow Us</Title>
                     <div style={{ marginBottom: 16 }}>
                       <motion.a 
                         href="https://www.instagram.com/nevlixofficial" 

@@ -1,19 +1,28 @@
 import { Typography, Row, Col, Card, Divider } from 'antd'
 import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
 import CommonLayout from '../components/Layout'
 
 const { Title, Paragraph } = Typography
 
 export default function CancellationRefunds() {
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200)
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
   return (
     <CommonLayout>
-      <div style={{ padding: '40px 16px', maxWidth: 1200, margin: '0 auto' }}>
+      <div style={{ padding: windowWidth < 576 ? '20px 8px' : windowWidth < 768 ? '30px 12px' : windowWidth < 1024 ? '40px 16px' : '50px 20px', maxWidth: 1200, margin: '0 auto' }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <Title level={1} style={{ textAlign: 'center', marginBottom: 40 }}>
+          <Title level={1} style={{ textAlign: 'center', marginBottom: windowWidth < 576 ? 20 : windowWidth < 768 ? 30 : 40, fontSize: windowWidth < 576 ? '20px' : windowWidth < 768 ? '24px' : '32px' }}>
             Cancellation and Refunds Policy
           </Title>
           
