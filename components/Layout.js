@@ -1,5 +1,5 @@
-import { Layout, Menu, Button, Typography, Row, Col, Avatar, Input, Space } from 'antd'
-import { ShoppingCartOutlined, InstagramOutlined, FacebookOutlined } from '@ant-design/icons'
+import { Layout, Menu, Button, Typography, Row, Col, Avatar, Input, Space, FloatButton } from 'antd'
+import { ShoppingCartOutlined, InstagramOutlined, FacebookOutlined, WhatsAppOutlined } from '@ant-design/icons'
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { useUser } from '../contexts/UserContext'
@@ -220,6 +220,14 @@ export default function CommonLayout({ children }) {
           </div>
         </Footer>
       </motion.div>
+      
+      <FloatButton
+        icon={<WhatsAppOutlined />}
+        type="primary"
+        style={{ backgroundColor: '#25D366', borderColor: '#25D366' }}
+        onClick={() => window.open('https://wa.me/917982995541', '_blank')}
+        tooltip="Chat on WhatsApp"
+      />
     </Layout>
   )
 }

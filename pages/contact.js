@@ -1,6 +1,6 @@
 import { Typography, Card, Row, Col, Form, Input, Button } from 'antd'
 import { motion } from 'framer-motion'
-import { MailOutlined, PhoneOutlined, EnvironmentOutlined } from '@ant-design/icons'
+import { MailOutlined, PhoneOutlined, EnvironmentOutlined, WhatsAppOutlined } from '@ant-design/icons'
 import CommonLayout from '../components/Layout'
 
 const { Title, Paragraph } = Typography
@@ -37,6 +37,13 @@ export default function Contact() {
                 <div style={{ marginBottom: 24 }}>
                   <EnvironmentOutlined style={{ marginRight: 8, color: '#fa8c16' }} />
                   <strong>Address:</strong> Nevlix Headquarters, India
+                </div>
+                <div style={{ marginBottom: 24 }}>
+                  <WhatsAppOutlined style={{ marginRight: 8, color: '#25D366' }} />
+                  <strong>WhatsApp:</strong> 
+                  <a href="https://wa.me/917982995541" target="_blank" rel="noopener noreferrer" style={{ marginLeft: 8, color: '#25D366' }}>
+                    +91-7982995541
+                  </a>
                 </div>
                 <Paragraph>
                   We're here to help! Reach out to us for any questions about our products, orders, or services. Our customer support team is ready to assist you.
