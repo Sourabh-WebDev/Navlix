@@ -25,7 +25,6 @@ export default function Login() {
       // Store token in localStorage
       if (response.data.token) {
         localStorage.setItem('token', response?.data.token)
-        console.log(response?.data.token, 'response')
         // Fetch user information
         const userResponse = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}api/User/secure`, {
           headers: { Authorization: `Bearer ${response?.data.token}` }
@@ -34,7 +33,7 @@ export default function Login() {
       }
 
       toast.success('Login successful!')
-      navigate('/dashboard');
+      window.location.href = '/dashboard'
       // if (user.roleList.includes('customer')) {
       //   navigate('/');
       // } else {
