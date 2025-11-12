@@ -33,12 +33,11 @@ export default function Login() {
       }
 
       toast.success('Login successful!')
-      window.location.href = '/dashboard'
-      // if (user.roleList.includes('customer')) {
-      //   navigate('/');
-      // } else {
-      //   navigate('/dashboard');
-      // }
+      if (user?.roleList === 'customer') {
+        window.location.href = '/'
+      } else {
+        window.location.href = '/dashboard'
+      }
 
     } catch (error) {
       toast.error('Login failed. Please check your credentials.')
