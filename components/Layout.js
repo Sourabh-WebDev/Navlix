@@ -47,10 +47,10 @@ export default function CommonLayout({ children }) {
             <Col xs={8} sm={6} md={4} lg={3} xl={3}>
               <Link href="/">
                 <motion.div whileHover={{ scale: 1.05 }} style={{ cursor: 'pointer' }}>
-                  <Image 
-                    src="/images/Navlix.jpeg" 
-                    alt="Navlix Logo" 
-                    width={windowWidth < 576 ? 60 : windowWidth < 768 ? 80 : windowWidth < 1024 ? 100 : 120} 
+                  <Image
+                    src="/images/Navlix.jpeg"
+                    alt="Nevlix Logo"
+                    width={windowWidth < 576 ? 60 : windowWidth < 768 ? 80 : windowWidth < 1024 ? 100 : 120}
                     height={windowWidth < 576 ? 25 : windowWidth < 768 ? 30 : windowWidth < 1024 ? 35 : 40}
                     style={{ objectFit: 'contain' }}
                   />
@@ -124,10 +124,10 @@ export default function CommonLayout({ children }) {
               <Row gutter={windowWidth < 576 ? [8, 16] : windowWidth < 768 ? [16, 20] : windowWidth < 1024 ? [24, 24] : [32, 32]}>
                 <Col xs={24} sm={12} md={6} lg={6}>
                   <motion.div variants={fadeInUp}>
-                    <Image 
-                      src="/images/Navlix.jpeg" 
-                      alt="Navlix Logo" 
-                      width={windowWidth < 576 ? 80 : windowWidth < 768 ? 100 : 120} 
+                    <Image
+                      src="/images/Navlix.jpeg"
+                      alt="Nevlix Logo"
+                      width={windowWidth < 576 ? 80 : windowWidth < 768 ? 100 : 120}
                       height={windowWidth < 576 ? 30 : windowWidth < 768 ? 35 : 40}
                       style={{ objectFit: 'contain', marginBottom: 16 }}
                     />
@@ -176,18 +176,18 @@ export default function CommonLayout({ children }) {
                   <motion.div variants={fadeInUp}>
                     <Title level={4} style={{ color: 'white', marginBottom: 16, fontSize: windowWidth < 576 ? '14px' : '16px' }}>Follow Us</Title>
                     <div style={{ marginBottom: 16 }}>
-                      <motion.a 
-                        href="https://www.instagram.com/nevlixofficial" 
-                        target="_blank" 
+                      <motion.a
+                        href="https://www.instagram.com/nevlixofficial"
+                        target="_blank"
                         rel="noopener noreferrer"
                         style={{ color: 'rgba(255,255,255,0.65)', marginRight: 16, fontSize: 24 }}
                         whileHover={{ color: '#E4405F', scale: 1.1 }}
                       >
                         <InstagramOutlined />
                       </motion.a>
-                      <motion.a 
-                        href="https://www.facebook.com/share/1CSRS7Fhvy" 
-                        target="_blank" 
+                      <motion.a
+                        href="https://www.facebook.com/share/1CSRS7Fhvy"
+                        target="_blank"
                         rel="noopener noreferrer"
                         style={{ color: 'rgba(255,255,255,0.65)', fontSize: 24 }}
                         whileHover={{ color: '#1877F2', scale: 1.1 }}
@@ -214,13 +214,13 @@ export default function CommonLayout({ children }) {
               transition={{ delay: 0.5 }}
             >
               <Paragraph style={{ color: 'rgba(255,255,255,0.45)', margin: 0 }}>
-                © 2024 Navlix. All rights reserved.
+                © 2024 Nevlix. All rights reserved.
               </Paragraph>
             </motion.div>
           </div>
         </Footer>
       </motion.div>
-      
+
       <FloatButton
         icon={<WhatsAppOutlined />}
         type="primary"

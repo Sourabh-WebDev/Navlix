@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useUser } from '../contexts/UserContext'
 import Link from 'next/link'
+import Head from 'next/head'
 import Image from 'next/image'
 
 const { Header, Content, Footer } = Layout
@@ -75,7 +76,12 @@ export default function Home() {
   console.log(featuredProducts, 'Featured Products')
 
   return (
-    <Layout>
+    <>
+      <Head>
+        <title>Nevlix</title>
+        <link rel="icon" href="/images/Navlix.jpeg" />
+      </Head>
+      <Layout>
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -468,12 +474,13 @@ export default function Home() {
               transition={{ delay: 0.5 }}
             >
               <Paragraph style={{ color: 'rgba(255,255,255,0.45)', margin: 0 }}>
-                © 2024 Navlix. All rights reserved.
+                © 2024 Nevlix. All rights reserved.
               </Paragraph>
             </motion.div>
           </div>
         </Footer>
       </motion.div>
     </Layout>
+    </>
   )
 }

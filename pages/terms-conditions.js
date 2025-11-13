@@ -20,7 +20,7 @@ export default function TermsConditions() {
           <Card>
             <Title level={3}>1. Introduction</Title>
             <Paragraph>
-              Welcome to Navlix! By accessing or using our services, you agree to be bound by these terms and conditions. These terms outline the rules and regulations for using Nevlix's website, applications, and purchasing our tea products.
+              Welcome to Nevlix! By accessing or using our services, you agree to be bound by these terms and conditions. These terms outline the rules and regulations for using Nevlix's website, applications, and purchasing our tea products.
             </Paragraph>
 
             <Title level={3}>2. Privacy Policy</Title>
